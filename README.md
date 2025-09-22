@@ -62,9 +62,17 @@ The library provides and Initialization function called **Init** that allows to 
   */
   HardwareSerial mySerial(PA10, PA11);
   
-  //Initialize the LED shield board and leave default channel values.
+  //Initialize the LED shield board with channel values.
   //This will use mySerial as logs output channel and will only show DEBUG level logs or lower
-  patchuginoPt100.Init(mySerial, LOG_LEVEL_DEBUG);
+  //**IMPORTANT** to have custom logging like this you cannot omit the channels selection! They all must be specified
+   patchuginoLed.Init(
+    LED_CHANNEL_1_SEL_1, 
+    LED_CHANNEL_2_SEL_1, 
+    LED_CHANNEL_3_SEL_1, 
+    LED_CHANNEL_4_SEL_1,
+    mySerial,
+    LOG_LEVEL_DEBUG
+    );
 ```
 #### No logging initialization
 ```
@@ -77,7 +85,14 @@ void setup() {
   
   //Initialize the LED shield board and leave default channel values
   //This will disable logs of the library. A valid Serial instance still needs to be provided
-  patchuginoPt100.Init(Serial, LOG_LEVEL_NONE);
+  //**IMPORTANT** disable logging like this you cannot omit the channels selection! They all must be specified
+  patchuginoPt100.Init(
+    LED_CHANNEL_1_SEL_1, 
+    LED_CHANNEL_2_SEL_1, 
+    LED_CHANNEL_3_SEL_1, 
+    LED_CHANNEL_4_SEL_1,
+    Serial,
+    LOG_LEVEL_NONE);
 ```
 
 ### Writing to a channel
