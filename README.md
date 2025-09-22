@@ -18,7 +18,10 @@ The PWM channels can be setup to be used by dirrent pins making it possible to s
 The board needs to be powered from an external 24V supply on the CN8 connector. If a led strip is to be connected it must be wired to the CN11 connector
 
 ## Library Usage
-The arduino library allows to control the board in a really simple and intuitive way with just a few lines of code. It allows to initialize the board by specifying the channels configuration that has been set with H17, H18, H19 and H20 pin headers. It comes with prebuilt functions to configure channels for RGB and to write colors.
+The arduino library allows to control the board in a really simple and intuitive way with just a few lines of code. It allows to initialize the board by specifying the channels configuration that has been set with H17, H18, H19 and H20 pin headers. It comes with prebuilt functions to configure channels for RGB and to write colors. All the librarie's functionalities are controlled by a class called **Patchugino_Led** that can be instantiated like this:
+```
+Patchugino_Led patchuginoLed;
+```
 
 ### Initialization
 The library provides and Initialization function called **Init** that allows to initialize everything that the board needs in order to work. The function takes the following parameters as input:
@@ -46,22 +49,22 @@ The library provides and Initialization function called **Init** that allows to 
   */
   Serial.begin(115200);
 
-  //Initialize the PT100 shield board and specify which CS it's using(CS0 in this case)
+  //Initialize the LED shield board and leave default channel values
   //Since serial and logLevel are not specified this will default to using Serial with LOG_LEVEL_VERBOSE
-  patchuginoPt100.Init(PT100_CS_0);
+  patchuginoLed.Init();
 ```
 
 #### Custom logging initialization
 ```
   /*
-    IMPORTANT!!! Patchugino PT100 library needs
+    IMPORTANT!!! Patchugino LED library needs
     Serial instance to be initialized before calling any function!
   */
   HardwareSerial mySerial(PA10, PA11);
   
-  //Initialize the PT100 shield board and specify which CS it's using(CS0 in this case)
+  //Initialize the LED shield board and leave default channel values.
   //This will use mySerial as logs output channel and will only show DEBUG level logs or lower
-  patchuginoPt100.Init(PT100_CS_0, mySerial, LOG_LEVEL_DEBUG);
+  patchuginoPt100.Init(mySerial, LOG_LEVEL_DEBUG);
 ```
 #### No logging initialization
 ```
@@ -72,9 +75,9 @@ void setup() {
   */
   Serial.begin(115200);
   
-  //Initialize the PT100 shield board and specify which CS it's using(CS0 in this case)
+  //Initialize the LED shield board and leave default channel values
   //This will disable logs of the library. A valid Serial instance still needs to be provided
-  patchuginoPt100.Init(PT100_CS_0, Serial, LOG_LEVEL_NONE);
+  patchuginoPt100.Init(Serial, LOG_LEVEL_NONE);
 ```
 
 ### Writing to a channel
